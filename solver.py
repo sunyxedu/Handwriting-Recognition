@@ -95,7 +95,7 @@ class Solver(object):
         loss_set, acc_set = [], []
         for images, labels in self.test_loader:
             loss, acc = self.model.forward(images, labels)
-            loss_set.append(logits)
+            loss_set.append(loss)
             acc_set.append(acc)
 
         loss = np.mean(loss_set)

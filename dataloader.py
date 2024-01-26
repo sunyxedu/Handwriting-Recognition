@@ -2,7 +2,6 @@ import os
 import struct
 import numpy as np
 
-
 class Dataset(object):
 
     def __init__(self, data_root, mode='train', num_classes=10):

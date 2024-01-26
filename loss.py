@@ -19,6 +19,12 @@ class SoftmaxCrossEntropyLoss(object):
         self.trainable = trainable
         self.XavierInit()
 
+    def softmax(self, numbers):
+        MaxValue = np.max(numbers, axis=1, keepdims=True)
+        numbers = np.exp(numbers - MaxValue)
+        numbers = numbers / np.sum(numbers, axis=1, keepdims=True)
+        return numbers
+    
     def forward(self, Input, labels):
         """
           Inputs: (minibatch)
@@ -35,6 +41,21 @@ class SoftmaxCrossEntropyLoss(object):
 
         ############################################################################
 
+        logits = np.dot(Input, self.W) + self.b
+        sft = self.softmax(logits)
+
+        if sft is None:
+            raise ValueError("None?!")
+        
+        prob = -np.log(sft[range(len(labels)), labels] + EPS)
+        loss = np.mean(prob)
+
+        predictions = np.argmax(sft, axis=1)
+        acc = np.mean(predictions == labels)
+
+        self.Input = Input
+        self.labels = labels
+        self.softmax_probs = prob
         return loss, acc
 
     def gradient_computing(self):
@@ -47,6 +68,17 @@ class SoftmaxCrossEntropyLoss(object):
         # self.grad_b =
         ############################################################################
 
+        size = len(self.labels)
+        self.grad_W = np.zeros_like(self.W)
+        self.grad_b = np.zeros_like(self.b)
+
+        for i in range(size):
+            diff = self.softmax_probs[i] - (self.labels[i] == np.arange(self.num_output))
+            self.grad_W += np.outer(self.Input[i], diff)
+            self.grad_b += diff
+
+        self.grad_W /= size
+        self.grad_b /= size
 
     def XavierInit(self):
         """

@@ -50,7 +50,6 @@ class Dataset(object):
 
         return image, label
 
-
 class IterationBatchSampler(object):
 
     def __init__(self, dataset, max_epoch, batch_size=2, shuffle=True):

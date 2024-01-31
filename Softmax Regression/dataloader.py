@@ -4,7 +4,7 @@ import numpy as np
 
 class Dataset(object):
 
-    def __init__(self, data_root, mode='train', num_classes=10):
+    def __init__(self, data_root, mode = 'train', num_classes = 10):
         assert mode in ['train', 'val', 'test']
 
         # load images and labels

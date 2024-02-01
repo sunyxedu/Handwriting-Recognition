@@ -1,5 +1,3 @@
-""" 定义训练和测试流程，无需了解 """
-
 import numpy as np
 import tensorflow.compat.v1 as tf
 tf.disable_eager_execution()

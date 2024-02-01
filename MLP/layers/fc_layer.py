@@ -1,17 +1,9 @@
-""" 全连接层 """
+""" FC Layer """
 
 import numpy as np
 
 class FCLayer():
 	def __init__(self, num_input, num_output, actFunction='relu', trainable=True):
-		"""
-		对输入进行线性变换: y = Wx + b
-		参数简介:
-			num_input: 输入大小
-			num_output: 输出大小
-			actFunction: 激活函数类型(无需修改)
-			trainable: 是否具有可训练的参数
-		"""
 		self.num_input = num_input
 		self.num_output = num_output
 		self.trainable = trainable
@@ -25,10 +17,6 @@ class FCLayer():
 
 
 	def forward(self, Input):
-		############################################################################
-	    # TODO: 
-		# 对输入计算Wx+b并返回结果.
-	    ############################################################################
 		self.Input = Input
 		self.Output = np.dot(self.Input, self.W) + self.b
 		if self.actFunction == 'relu':
@@ -38,11 +26,6 @@ class FCLayer():
 		return self.Output
 
 	def backward(self, delta):
-		# 输入的delta由下一层计算得到
-		############################################################################
-	    # TODO: 
-		# 根据delta计算梯度
-	    ############################################################################
 		if self.actFunction == 'relu':
 			delta = delta * (self.Output > 0)
 		elif self.actFunction == 'sigmoid':
@@ -53,7 +36,6 @@ class FCLayer():
 		return grad
 
 	def XavierInit(self):
-		# 初始化，无需了解.
 		raw_std = (2 / (self.num_input + self.num_output))**0.5
 		if 'relu' == self.actFunction:
 			init_std = raw_std * (2**0.5)

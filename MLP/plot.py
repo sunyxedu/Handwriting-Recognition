@@ -1,5 +1,3 @@
-""" 绘制损失和准确率曲线 """
-
 import matplotlib.pyplot as plt
 import numpy as np
 
